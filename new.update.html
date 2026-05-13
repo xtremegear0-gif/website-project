@@ -223,6 +223,50 @@
         .feature-card-body { padding: 1.25rem; }
         .feature-card-body p { color: #a8a8a8; font-size: 0.85rem; line-height: 1.75; }
         .feature-card-body h4 { margin-top: 0.75rem; letter-spacing: 0.16em; font-size: 0.92rem; }
+        .feature-card-actions { margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
+        .cart-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.15rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.06);
+            color: #f8f8f8;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cart-button:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(255,255,255,0.08);
+        }
+        .cart-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            animation: iconFloat 3.6s ease-in-out infinite;
+        }
+        .cart-button:hover .cart-icon {
+            animation: cartPulse 0.5s ease-in-out;
+        }
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        @keyframes cartPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.14) translateX(2px); }
+            100% { transform: scale(1); }
+        }
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .nav-right { display: none; }
@@ -336,6 +380,12 @@
                         <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Unisex Hoodie</p>
                         <h4 class="mt-3 text-xl font-semibold">Faded Saint Logo Black</h4>
                         <p class="mt-3">A core classic rework with soft cotton and low-key premium details, perfect for layering under statement outerwear.</p>
+                        <div class="feature-card-actions">
+                            <button class="cart-button" type="button">
+                                <span class="cart-icon">🛒</span>
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </article>
                 <article class="feature-card">
@@ -344,6 +394,12 @@
                         <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Graphic Tee</p>
                         <h4 class="mt-3 text-xl font-semibold">Vintage Smile Tee</h4>
                         <p class="mt-3">Bold graphics and a relaxed fit make this piece a weekend essential for layering or standout solo wear.</p>
+                        <div class="feature-card-actions">
+                            <button class="cart-button" type="button">
+                                <span class="cart-icon">🛒</span>
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </article>
                 <article class="feature-card">
@@ -352,6 +408,12 @@
                         <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Reworked</p>
                         <h4 class="mt-3 text-xl font-semibold">Saint Custom Denim</h4>
                         <p class="mt-3">Limited vintage denim reworks with precise distressing and tailored accents for everyday edge.</p>
+                        <div class="feature-card-actions">
+                            <button class="cart-button" type="button">
+                                <span class="cart-icon">🛒</span>
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </article>
                 <article class="feature-card">
@@ -360,6 +422,12 @@
                         <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Accessories</p>
                         <h4 class="mt-3 text-xl font-semibold">Limited Edition Cap</h4>
                         <p class="mt-3">Finishing touches that elevate every outfit, from logo caps to minimal hardware details.</p>
+                        <div class="feature-card-actions">
+                            <button class="cart-button" type="button">
+                                <span class="cart-icon">🛒</span>
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </article>
             </div>
