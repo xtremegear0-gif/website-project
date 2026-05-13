@@ -7,99 +7,178 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #000000; color: #ffffff; font-family: 'Inter', sans-serif; margin: 0; }
+        :root {
+            color-scheme: dark;
+            background-color: #050505;
+            color: #f8f8f8;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: #050505;
+            color: #f8f8f8;
+            font-family: 'Inter', sans-serif;
+        }
         .heading-font { font-family: 'Syncopate', sans-serif; text-transform: uppercase; }
-        .btn-white { background-color: white; color: black; padding: 12px 30px; text-transform: uppercase; font-weight: bold; font-size: 12px; transition: 0.3s; }
-        .btn-white:hover { opacity: 0.8; }
-        .product-card img { filter: grayscale(20%); transition: 0.5s; }
-        .product-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
+        .top-bar { background: #111; color: #f8f8f8; }
+        .hero-panel { min-height: calc(100vh - 88px); padding: 4rem 1.5rem; }
+        .hero-panel-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 1024px) { .hero-panel-inner { grid-template-columns: 1.25fr 0.95fr; align-items: center; } }
+        .image-panel { position: relative; overflow: hidden; border-radius: 2rem; min-height: 450px; border: 1px solid rgba(255,255,255,0.08); background: #111; box-shadow: 0 32px 80px rgba(0,0,0,0.35); }
+        .image-panel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s ease; }
+        .image-panel:hover img { transform: scale(1.08) rotate(0.2deg); }
+        .image-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.85)); pointer-events: none; }
+        .hero-copy { position: relative; padding: 3rem; border-radius: 2rem; background: rgba(0,0,0,0.68); border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); backdrop-filter: blur(12px); }
+        .hero-title { letter-spacing: -0.04em; line-height: 0.9; }
+        .btn-white { background: #fafafa; color: #050505; font-weight: 700; letter-spacing: 0.18em; padding: 14px 32px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; }
+        .btn-white:hover { transform: translateY(-2px); background: #e5e5e5; box-shadow: 0 14px 30px rgba(255,255,255,0.08); }
+        .badge { position: absolute; top: 1.25rem; left: 1.25rem; z-index: 2; display: inline-flex; padding: 0.6rem 1rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(10px); font-size: 0.65rem; letter-spacing: 0.34em; text-transform: uppercase; }
+        .side-tag { position: absolute; right: 1.5rem; bottom: 1.5rem; z-index: 2; font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: #a1a1a1; }
+        .section-heading { font-size: clamp(2rem, 4vw, 3rem); }
+        .section-copy { color: #a8a8a8; letter-spacing: 0.12em; text-transform: uppercase; }
+        .card-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (min-width: 1280px) { .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        .feature-card { border-radius: 1.5rem; overflow: hidden; background: #101010; border: 1px solid rgba(255,255,255,0.08); transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        .feature-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.18); box-shadow: 0 26px 60px rgba(0,0,0,0.35); }
+        .feature-card img { width: 100%; height: 260px; object-fit: cover; display: block; }
+        .feature-card-body { padding: 1.25rem; }
+        .feature-card-body p { color: #a8a8a8; font-size: 0.85rem; line-height: 1.75; }
+        .feature-card-body h4 { margin-top: 0.75rem; letter-spacing: 0.16em; font-size: 0.92rem; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .nav-right { display: none; }
+        @media (min-width: 768px) { .nav-right { display: flex; gap: 1rem; align-items: center; } }
+        .nav-icon { width: 1.1rem; height: 1.1rem; stroke: currentColor; }
+        .hero-label { font-size: 0.75rem; letter-spacing: 0.42em; color: #c7c7c7; text-transform: uppercase; }
+        .hero-line { display: block; width: 48px; height: 2px; background: #fafafa; margin: 1.75rem auto; opacity: 0.35; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center; margin-top: 2rem; }
+        .hero-actions a:last-child { color: #c7c7c7; border-bottom: 1px solid rgba(255,255,255,0.16); padding-bottom: 0.15rem; }
+        .hero-actions a:hover { color: #fff; }
+        @keyframes floatUp { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        .float-up { animation: floatUp 8s ease-in-out infinite; }
         html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
-    <div class="bg-white text-black text-[10px] py-1 text-center font-bold tracking-[0.2em] uppercase">
-        Limited Releases. Exclusive Drops. Elegance is now live.
+    <div class="top-bar text-[10px] py-2 text-center font-bold tracking-[0.25em] uppercase">
+        limited drops available now — reworks with a luxury street edge
     </div>
 
-    <nav class="relative">
-        <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center px-6 md:px-10 py-4 md:py-6 sticky top-0 bg-black z-50 gap-4 md:gap-0">
-            <div class="w-full flex items-center justify-between">
-                <h1 class="text-2xl heading-font font-bold tracking-tighter">FADEDSAINT</h1>
-                <button id="menuToggle" class="md:hidden text-white border border-white rounded px-3 py-2">
-                    <span class="text-[10px] uppercase tracking-[0.3em] font-semibold">Menu</span>
-                </button>
+    <nav class="relative px-6 md:px-10 py-5 sticky top-0 bg-black/95 backdrop-blur-xl z-50 border-b border-white/5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <div class="hidden md:flex gap-8 items-center text-[11px] uppercase tracking-[0.35em] font-semibold text-gray-300">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="catalog.html" class="hover:text-white transition">Catalog</a>
+                <a href="about.html" class="hover:text-white transition">About</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
             </div>
-            <div id="navLinks" class="hidden md:flex flex-col md:flex-row md:space-x-6 items-start md:items-center gap-3 text-[11px] uppercase tracking-widest font-semibold w-full md:w-auto">
-                <a href="index.html">Home</a>
-                <a href="catalog.html">Catalog</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+            <div class="flex-1 flex justify-center md:justify-center">
+                <a href="index.html" class="heading-font text-2xl md:text-3xl text-white tracking-tighter">FADEDSAINT</a>
             </div>
-        </div>
-        <!-- Mobile Menu Sidebar -->
-        <div id="mobileMenu" class="fixed left-0 top-0 w-64 h-full bg-black z-50 flex flex-col items-start p-6 transform -translate-x-full transition-transform duration-300 md:hidden">
-            <button id="closeMenu" class="self-end text-white mb-8">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <div class="flex flex-col gap-6 text-[11px] uppercase tracking-widest font-semibold">
-                <a href="index.html" class="hover:text-gray-300">Home</a>
-                <a href="catalog.html" class="hover:text-gray-300">Catalog</a>
-                <a href="about.html" class="hover:text-gray-300">About</a>
-                <a href="contact.html" class="hover:text-gray-300">Contact</a>
+            <div class="nav-right text-gray-300">
+                <button aria-label="Search" class="hover:text-white transition"><svg class="nav-icon" fill="none" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="10" cy="10" r="6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></circle></svg></button>
+                <button aria-label="Account" class="hover:text-white transition"><svg class="nav-icon" fill="none" viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 22c0-3.31 2.69-6 6-6h4c3.31 0 6 2.69 6 6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
             </div>
+            <button id="menuToggle" class="md:hidden text-white border border-white/20 rounded-full px-4 py-2 text-[10px] uppercase tracking-[0.35em]">Menu</button>
         </div>
     </nav>
 
-    <header class="hero-bg flex flex-col items-center justify-center text-center px-4 py-20" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800'); background-size: cover; background-position: center; min-height: 60vh;">
-        <h2 class="text-4xl md:text-6xl font-bold heading-font leading-tight mb-4">Catalog</h2>
-        <p class="text-gray-300 uppercase text-sm sm:text-base max-w-2xl">Explore our latest drops, reworked pieces, and limited edition apparel.</p>
-    </header>
+    <div id="mobileMenu" class="fixed left-0 top-0 w-64 h-full bg-black z-50 flex flex-col items-start p-6 transform -translate-x-full transition-transform duration-300 md:hidden border-r border-white/10">
+        <button id="closeMenu" class="self-end text-white mb-8">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="flex flex-col gap-6 text-[11px] uppercase tracking-[0.35em] font-semibold w-full">
+            <a href="index.html" class="hover:text-gray-300 transition">Home</a>
+            <a href="catalog.html" class="hover:text-gray-300 transition">Catalog</a>
+            <a href="about.html" class="hover:text-gray-300 transition">About</a>
+            <a href="contact.html" class="hover:text-gray-300 transition">Contact</a>
+        </div>
+    </div>
 
-    <section class="px-4 sm:px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-16">
-        <div class="product-card group bg-zinc-900 p-4 rounded-xl">
-            <div class="aspect-[3/4] mb-4 overflow-hidden rounded-xl">
-                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600" class="w-full h-full object-cover">
+    <main class="hero-panel">
+        <div class="hero-panel-inner">
+            <div class="hero-copy reveal">
+                <p class="hero-label">Shop by edit</p>
+                <h1 class="hero-title text-5xl md:text-6xl xl:text-7xl font-bold heading-font">Catalog<br>New Arrivals</h1>
+                <span class="hero-line"></span>
+                <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto">Limited vintage reworks and premium streetwear with bold detailing and premium finishing. Browse the latest drops, exclusive pieces, and seasonal capsules.</p>
+                <div class="hero-actions">
+                    <a href="contact.html" class="btn-white">Contact Sales</a>
+                    <a href="#products" class="uppercase tracking-[0.35em] text-sm text-gray-400 hover:text-white transition">View Products</a>
+                </div>
             </div>
-            <p class="text-[11px] text-gray-400 uppercase">Unisex Hoodie</p>
-            <p class="text-xs font-bold uppercase">Faded Saint Logo Black — $45.00</p>
+            <div class="image-panel float-up reveal">
+                <span class="badge">Fresh drop</span>
+                <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=900" alt="Catalog highlight image">
+                <span class="side-tag">Online only</span>
+            </div>
         </div>
-        <div class="product-card group bg-zinc-900 p-4 rounded-xl">
-            <div class="aspect-[3/4] mb-4 overflow-hidden rounded-xl">
-                <img src="https://images.unsplash.com/photo-1571945153237-4929e783ee4a?q=80&w=600" class="w-full h-full object-cover">
+    </main>
+
+    <section id="products" class="px-6 md:px-10 py-16 reveal">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                <div>
+                    <p class="section-copy mb-3">Featured product edit</p>
+                    <h2 class="section-heading heading-font">The latest pieces</h2>
+                </div>
+                <p class="text-gray-500 text-sm md:text-base max-w-2xl">Curated styles designed to layer, stand out, and feel premium. Each item is built for a confident yet understated streetwear wardrobe.</p>
             </div>
-            <p class="text-[11px] text-gray-400 uppercase">Graphic Tee</p>
-            <p class="text-xs font-bold uppercase">Vintage Smile Tee — $35.00</p>
-        </div>
-        <div class="product-card group bg-zinc-900 p-4 rounded-xl">
-            <div class="aspect-[3/4] mb-4 overflow-hidden rounded-xl">
-                <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=600" class="w-full h-full object-cover">
+            <div class="card-grid">
+                <article class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800" alt="Unisex hoodie">
+                    <div class="feature-card-body">
+                        <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Unisex Hoodie</p>
+                        <h4 class="mt-3 text-xl font-semibold">Faded Saint Logo Black</h4>
+                        <p class="mt-3">A core classic rework with soft cotton and low-key premium details, perfect for layering under statement outerwear.</p>
+                    </div>
+                </article>
+                <article class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1571945153237-4929e783ee4a?q=80&w=800" alt="Graphic tee">
+                    <div class="feature-card-body">
+                        <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Graphic Tee</p>
+                        <h4 class="mt-3 text-xl font-semibold">Vintage Smile Tee</h4>
+                        <p class="mt-3">Bold graphics and a relaxed fit make this piece a weekend essential for layering or standout solo wear.</p>
+                    </div>
+                </article>
+                <article class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=800" alt="Reworked denim">
+                    <div class="feature-card-body">
+                        <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Reworked</p>
+                        <h4 class="mt-3 text-xl font-semibold">Saint Custom Denim</h4>
+                        <p class="mt-3">Limited vintage denim reworks with precise distressing and tailored accents for everyday edge.</p>
+                    </div>
+                </article>
+                <article class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800" alt="Accessories">
+                    <div class="feature-card-body">
+                        <p class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Accessories</p>
+                        <h4 class="mt-3 text-xl font-semibold">Limited Edition Cap</h4>
+                        <p class="mt-3">Finishing touches that elevate every outfit, from logo caps to minimal hardware details.</p>
+                    </div>
+                </article>
             </div>
-            <p class="text-[11px] text-gray-400 uppercase">Reworked</p>
-            <p class="text-xs font-bold uppercase">Saint Custom Denim — $120.00</p>
-        </div>
-        <div class="product-card group bg-zinc-900 p-4 rounded-xl">
-            <div class="aspect-[3/4] mb-4 overflow-hidden rounded-xl">
-                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=600" class="w-full h-full object-cover">
-            </div>
-            <p class="text-[11px] text-gray-400 uppercase">Accessories</p>
-            <p class="text-xs font-bold uppercase">Limited Edition Cap — $25.00</p>
         </div>
     </section>
 
-    <section class="px-6 md:px-10 pb-20 border-t border-zinc-900">
-        <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-3xl heading-font mb-4">Shop by Category</h3>
-            <p class="text-gray-500 text-sm md:text-base leading-relaxed uppercase mb-8">Pick your favorite style from our curated categories and discover sought-after vintage reworks.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="bg-zinc-900 rounded-xl p-6"> <p class="text-[10px] uppercase text-gray-500 mb-3">Category</p> <h4 class="text-xl font-bold">Streetwear</h4> </div>
-                <div class="bg-zinc-900 rounded-xl p-6"> <p class="text-[10px] uppercase text-gray-500 mb-3">Category</p> <h4 class="text-xl font-bold">Denim</h4> </div>
-                <div class="bg-zinc-900 rounded-xl p-6"> <p class="text-[10px] uppercase text-gray-500 mb-3">Category</p> <h4 class="text-xl font-bold">Accessories</h4> </div>
+    <section class="px-6 md:px-10 pb-24 reveal">
+        <div class="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1.2fr_0.9fr] items-center">
+            <div>
+                <p class="section-copy mb-4">Shop by Category</p>
+                <h2 class="section-heading heading-font mb-6">Discover your next edit</h2>
+                <p class="text-gray-400 leading-relaxed text-sm md:text-base">Browse styles by streetwear, denim, and accessories. Each category is curated for versatile layering and premium everyday wear.</p>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-3">
+                <div class="bg-zinc-900 rounded-3xl p-6 border border-white/10"> <p class="text-[10px] uppercase text-gray-500 mb-3">Category</p> <h4 class="text-xl font-semibold">Streetwear</h4> </div>
+                <div class="bg-zinc-900 rounded-3xl p-6 border border-white/10"> <p class="text-[10px] uppercase text-gray-500 mb-3">Category</p> <h4 class="text-xl font-semibold">Denim</h4> </div>
+                <div class="bg-zinc-900 rounded-3xl p-6 border border-white/10"> <p class="text-[10px] uppercase text-gray-500 mb-3">Category</p> <h4 class="text-xl font-semibold">Accessories</h4> </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center border-t border-zinc-900">
-        <p class="text-[10px] text-gray-600 tracking-[0.4em] uppercase">© 2026 FadedSaint Worldwide. Elegance Disruptors.</p>
+    <footer class="py-10 text-center border-t border-white/10">
+        <p class="text-[10px] text-gray-500 tracking-[0.4em] uppercase">© 2026 FadedSaint Worldwide. Elegance Disruptors.</p>
     </footer>
 
     <script>
@@ -115,12 +194,23 @@
             mobileMenu.classList.add('-translate-x-full');
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                 mobileMenu.classList.add('-translate-x-full');
             }
         });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach((element) => revealObserver.observe(element));
     </script>
 </body>
 </html>
