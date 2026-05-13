@@ -258,6 +258,44 @@
             color: #fff;
             animation: iconFloat 3.6s ease-in-out infinite;
         }
+        .modal-panel {
+            width: min(980px, 100%);
+            max-height: calc(100vh - 4rem);
+            overflow: hidden;
+            position: relative;
+            border-radius: 2rem;
+            background: #080808;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 40px 120px rgba(0,0,0,0.5);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+        @media (min-width: 1024px) { .modal-panel { grid-template-columns: 1.1fr 0.9fr; } }
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(0,0,0,0.85);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .product-modal.open { opacity: 1; visibility: visible; }
+        .modal-image { position: relative; border-radius: 1.75rem; overflow: hidden; min-height: 320px; }
+        .modal-image img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.95); }
+        .modal-meta { display: flex; flex-direction: column; gap: 1.2rem; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; width: 2.6rem; height: 2.6rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06); color: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; }
+        .modal-close:hover { background: rgba(255,255,255,0.12); transform: scale(1.05); }
+        .modal-feature { display: flex; justify-content: space-between; gap: 0.75rem; background: #111; border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 1rem; }
+        .modal-actions { display: grid; gap: 1rem; }
+        .product-modal [aria-hidden="false"] { overflow: auto; }
+        .cart-button:hover .cart-icon { animation: cartPulse 0.5s ease-in-out; }
         .cart-button:hover .cart-icon {
             animation: cartPulse 0.5s ease-in-out;
         }
@@ -377,7 +415,7 @@
                 <p class="text-gray-500 text-sm md:text-base max-w-2xl">Curated styles designed to layer, stand out, and feel premium. Each item is built for a confident yet understated streetwear wardrobe.</p>
             </div>
             <div class="card-grid">
-                <article class="feature-card">
+                <article class="feature-card" data-title="Faded Saint Logo Black" data-category="Unisex Hoodie" data-price="$128" data-availability="In stock" data-description="A core classic rework with soft cotton and low-key premium details, perfect for layering under statement outerwear." data-image="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800">
                     <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800" alt="Unisex hoodie">
                     <div class="cart-overlay">
                         <button class="cart-button small" type="button">
@@ -397,7 +435,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="feature-card">
+                <article class="feature-card" data-title="Vintage Smile Tee" data-category="Graphic Tee" data-price="$74" data-availability="In stock" data-description="Bold graphics and a relaxed fit make this piece a weekend essential for layering or standout solo wear." data-image="https://images.unsplash.com/photo-1571945153237-4929e783ee4a?q=80&w=800">
                     <img src="https://images.unsplash.com/photo-1571945153237-4929e783ee4a?q=80&w=800" alt="Graphic tee">
                     <div class="cart-overlay">
                         <button class="cart-button small" type="button">
@@ -417,7 +455,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="feature-card">
+                <article class="feature-card" data-title="Saint Custom Denim" data-category="Reworked Denim" data-price="$198" data-availability="Limited stock" data-description="Limited vintage denim reworks with precise distressing and tailored accents for everyday edge." data-image="https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=800">
                     <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=800" alt="Reworked denim">
                     <div class="cart-overlay">
                         <button class="cart-button small" type="button">
@@ -437,7 +475,7 @@
                         </div>
                     </div>
                 </article>
-                <article class="feature-card">
+                <article class="feature-card" data-title="Limited Edition Cap" data-category="Accessories" data-price="$68" data-availability="In stock" data-description="Finishing touches that elevate every outfit, from logo caps to minimal hardware details." data-image="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800">
                     <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800" alt="Accessories">
                     <div class="cart-overlay">
                         <button class="cart-button small" type="button">
@@ -481,6 +519,33 @@
         </div>
     </section>
 
+    <div id="productModal" class="product-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-panel">
+            <button id="closeProductModal" class="modal-close" aria-label="Close product details">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+            </button>
+            <div class="modal-image">
+                <img id="modalImage" src="" alt="">
+            </div>
+            <div class="modal-meta">
+                <span id="modalCategory" class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Category</span>
+                <h2 id="modalTitle" class="section-heading heading-font">Product Title</h2>
+                <p id="modalDescription" class="text-gray-400 leading-relaxed">Product details appear here when you select a product.</p>
+                <div class="modal-feature">
+                    <span class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Price</span>
+                    <span id="modalPrice" class="text-lg font-semibold">$0</span>
+                </div>
+                <div class="modal-feature">
+                    <span class="text-[10px] uppercase tracking-[0.35em] text-gray-500">Availability</span>
+                    <span id="modalAvailability" class="text-lg font-semibold text-emerald-400">In stock</span>
+                </div>
+                <div class="modal-actions">
+                    <button id="modalAddCart" class="btn-white" type="button">Add to Cart</button>
+                    <a href="#products" class="uppercase tracking-[0.35em] text-sm text-gray-400 hover:text-white transition">Continue browsing</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="py-10 text-center border-t border-white/10">
         <p class="text-[10px] text-gray-500 tracking-[0.4em] uppercase">© 2026 FadedSaint Worldwide. Elegance Disruptors.</p>
     </footer>
@@ -502,6 +567,48 @@
             if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                 mobileMenu.classList.add('-translate-x-full');
             }
+        });
+
+        const productModal = document.getElementById('productModal');
+        const closeProductModal = document.getElementById('closeProductModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalAvailability = document.getElementById('modalAvailability');
+        const modalAddCart = document.getElementById('modalAddCart');
+        const productCards = document.querySelectorAll('.feature-card');
+
+        const openProductModal = (card) => {
+            const data = card.dataset;
+            productModal.classList.add('open');
+            productModal.setAttribute('aria-hidden', 'false');
+            modalImage.src = data.image || card.querySelector('img').src;
+            modalImage.alt = data.title || 'Product image';
+            modalTitle.textContent = data.title;
+            modalCategory.textContent = data.category;
+            modalDescription.textContent = data.description;
+            modalPrice.textContent = data.price;
+            modalAvailability.textContent = data.availability;
+            modalAddCart.textContent = `Add ${data.title}`;
+        };
+
+        const closeModal = () => {
+            productModal.classList.remove('open');
+            productModal.setAttribute('aria-hidden', 'true');
+        };
+
+        productCards.forEach((card) => {
+            card.addEventListener('click', (event) => {
+                if (event.target.closest('.cart-button')) return;
+                openProductModal(card);
+            });
+        });
+
+        closeProductModal.addEventListener('click', closeModal);
+        productModal.addEventListener('click', (event) => {
+            if (event.target === productModal) closeModal();
         });
 
         const revealElements = document.querySelectorAll('.reveal');
