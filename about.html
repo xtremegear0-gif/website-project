@@ -16,6 +16,95 @@
         body { margin: 0; background: #050505; color: #f8f8f8; font-family: 'Inter', sans-serif; }
         .heading-font { font-family: 'Syncopate', sans-serif; text-transform: uppercase; }
         .top-bar { background: #111; color: #f8f8f8; }
+        .utility-bar {
+            background: #090909;
+            color: #f8f8f8;
+        }
+        .utility-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: #a8a8a8;
+            padding: 0.9rem 1rem;
+        }
+        .utility-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .utility-links a:hover {
+            color: #fff;
+        }
+        .nav-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.3rem;
+            align-items: center;
+        }
+        .nav-dropdown-button {
+            background: transparent;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font: inherit;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.75rem);
+            left: 0;
+            min-width: 220px;
+            background: rgba(8, 8, 8, 0.98);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+            z-index: 30;
+        }
+        .group:hover .dropdown-menu,
+        .group:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-menu a {
+            display: block;
+            color: #d6d6d6;
+            text-decoration: none;
+            padding: 0.65rem 0;
+            letter-spacing: 0.18em;
+            transition: color 0.2s ease;
+        }
+        .dropdown-menu a:hover {
+            color: #fff;
+        }
+        .nav-links { display: none; }
+        @media (min-width: 1280px) { .nav-links { display: flex; gap: 1.3rem; align-items: center; } }
+        .nav-right { display: none; }
+        @media (min-width: 768px) { .nav-right { display: flex; gap: 1rem; align-items: center; } }
+        .nav-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: #f8f8f8;
+            text-decoration: none;
+            font-size: 0.78rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+        }
         .hero-panel { min-height: calc(100vh - 88px); padding: 4rem 1.5rem; }
         .hero-panel-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
         @media (min-width: 1024px) { .hero-panel-inner { grid-template-columns: 1.1fr 0.95fr; align-items: center; } }
@@ -56,26 +145,42 @@
     </style>
 </head>
 <body>
-    <div class="top-bar text-[10px] py-2 text-center font-bold tracking-[0.25em] uppercase">
-        limited drops available now — reworks with a luxury street edge
+    <div class="utility-bar">
+        <div class="utility-links">
+            <a href="login.html">Login</a>
+            <a href="#">Order Lookup</a>
+            <a href="#">Find a Store</a>
+        </div>
     </div>
 
     <nav class="relative px-6 md:px-10 py-5 sticky top-0 bg-black/95 backdrop-blur-xl z-50 border-b border-white/5">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <div class="hidden md:flex gap-8 items-center text-[11px] uppercase tracking-[0.35em] font-semibold text-gray-300">
-                <a href="index.html" class="hover:text-white transition">Home</a>
+            <a href="index.html" class="heading-font text-2xl md:text-3xl text-white tracking-tighter">FADEDSAINT</a>
+            <div class="nav-links text-[11px] uppercase tracking-[0.35em] font-semibold text-gray-300">
+                <a href="index.html" class="hover:text-white transition">New</a>
                 <a href="catalog.html" class="hover:text-white transition">Catalog</a>
                 <a href="about.html" class="hover:text-white transition">About</a>
                 <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <div class="group relative">
+                    <button class="nav-dropdown-button">Accessories</button>
+                    <div class="dropdown-menu">
+                        <a href="#">Shop All</a>
+                        <a href="#">New</a>
+                        <a href="#">Headwear</a>
+                        <a href="#">Bags & Backpacks</a>
+                        <a href="#">Work Accessories</a>
+                    </div>
+                </div>
+                <a href="#" class="hover:text-white transition">Collections</a>
+                <a href="#" class="hover:text-white transition">Sale</a>
             </div>
-            <div class="flex-1 flex justify-center md:justify-center">
-                <a href="index.html" class="heading-font text-2xl md:text-3xl text-white tracking-tighter">FADEDSAINT</a>
+            <div class="flex items-center gap-3">
+                <a href="login.html" class="nav-action">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 12a3 3 0 1 0-6 0"></path><path d="M5.5 20a6.5 6.5 0 0 1 13 0"></path></svg>
+                    Login
+                </a>
+                <button id="menuToggle" class="md:hidden text-white border border-white/20 rounded-full px-4 py-2 text-[10px] uppercase tracking-[0.35em]">Menu</button>
             </div>
-            <div class="nav-right text-gray-300">
-                <button aria-label="Search" class="hover:text-white transition"><svg class="nav-icon" fill="none" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="10" cy="10" r="6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></circle></svg></button>
-                <button aria-label="Account" class="hover:text-white transition"><svg class="nav-icon" fill="none" viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 22c0-3.31 2.69-6 6-6h4c3.31 0 6 2.69 6 6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-            </div>
-            <button id="menuToggle" class="md:hidden text-white border border-white/20 rounded-full px-4 py-2 text-[10px] uppercase tracking-[0.35em]">Menu</button>
         </div>
     </nav>
 
@@ -83,11 +188,21 @@
         <button id="closeMenu" class="self-end text-white mb-8">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-        <div class="flex flex-col gap-6 text-[11px] uppercase tracking-[0.35em] font-semibold w-full">
-            <a href="index.html" class="hover:text-gray-300 transition">Home</a>
+        <div class="flex flex-col gap-5 text-[11px] uppercase tracking-[0.35em] font-semibold w-full">
+            <a href="index.html" class="hover:text-gray-300 transition">New</a>
             <a href="catalog.html" class="hover:text-gray-300 transition">Catalog</a>
             <a href="about.html" class="hover:text-gray-300 transition">About</a>
             <a href="contact.html" class="hover:text-gray-300 transition">Contact</a>
+            <a href="#" class="hover:text-gray-300 transition">Accessories</a>
+            <div class="pl-4 flex flex-col gap-3 text-[10px] tracking-[0.35em]">
+                <a href="#" class="hover:text-gray-300 transition">Shop All</a>
+                <a href="#" class="hover:text-gray-300 transition">Headwear</a>
+                <a href="#" class="hover:text-gray-300 transition">Bags & Backpacks</a>
+                <a href="#" class="hover:text-gray-300 transition">Work Accessories</a>
+            </div>
+            <a href="login.html" class="hover:text-gray-300 transition">Login</a>
+            <a href="#" class="hover:text-gray-300 transition">Order Lookup</a>
+            <a href="#" class="hover:text-gray-300 transition">Find a Store</a>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FadedSaint | Contact</title>
+    <title>FadedSaint | Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -107,27 +107,19 @@
         }
         .hero-panel { min-height: calc(100vh - 88px); padding: 4rem 1.5rem; }
         .hero-panel-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 1024px) { .hero-panel-inner { grid-template-columns: 1.15fr 0.85fr; align-items: center; } }
+        @media (min-width: 1024px) { .hero-panel-inner { grid-template-columns: 1.2fr 0.9fr; align-items: center; } }
         .image-panel { position: relative; overflow: hidden; border-radius: 2rem; min-height: 450px; border: 1px solid rgba(255,255,255,0.08); background: #111; box-shadow: 0 32px 80px rgba(0,0,0,0.35); }
         .image-panel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s ease; }
         .image-panel:hover img { transform: scale(1.08) rotate(0.2deg); }
-        .image-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.85)); pointer-events: none; }
         .hero-copy { position: relative; padding: 3rem; border-radius: 2rem; background: rgba(0,0,0,0.68); border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); backdrop-filter: blur(12px); }
         .hero-title { letter-spacing: -0.04em; line-height: 0.9; }
         .btn-white { background: #fafafa; color: #050505; font-weight: 700; letter-spacing: 0.18em; padding: 14px 32px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; }
         .btn-white:hover { transform: translateY(-2px); background: #e5e5e5; box-shadow: 0 14px 30px rgba(255,255,255,0.08); }
-        .badge { position: absolute; top: 1.25rem; left: 1.25rem; z-index: 2; display: inline-flex; padding: 0.6rem 1rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(10px); font-size: 0.65rem; letter-spacing: 0.34em; text-transform: uppercase; }
-        .side-tag { position: absolute; right: 1.5rem; bottom: 1.5rem; z-index: 2; font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: #a1a1a1; }
-        .section-heading { font-size: clamp(2rem, 4vw, 3rem); }
-        .section-copy { color: #a8a8a8; letter-spacing: 0.12em; text-transform: uppercase; }
         .form-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 2rem; padding: 2rem; box-shadow: 0 30px 60px rgba(0,0,0,0.24); }
         .input-field { width: 100%; border-radius: 1rem; padding: 1.1rem 1.25rem; background: #101010; border: 1px solid rgba(255,255,255,0.12); color: #f8f8f8; }
         .input-field::placeholder { color: #777; }
-        .contact-grid { display: grid; gap: 1.5rem; }
-        @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
-        .contact-panel { border-radius: 2rem; background: #111; border: 1px solid rgba(255,255,255,0.08); padding: 2rem; }
-        .contact-panel h3 { margin-bottom: 1rem; }
-        .contact-panel p { color: #a8a8a8; line-height: 1.85; }
+        .section-heading { font-size: clamp(2rem, 4vw, 3rem); }
+        .section-copy { color: #a8a8a8; letter-spacing: 0.12em; text-transform: uppercase; }
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .nav-right { display: none; }
@@ -135,11 +127,6 @@
         .nav-icon { width: 1.1rem; height: 1.1rem; stroke: currentColor; }
         .hero-label { font-size: 0.75rem; letter-spacing: 0.42em; color: #c7c7c7; text-transform: uppercase; }
         .hero-line { display: block; width: 48px; height: 2px; background: #fafafa; margin: 1.75rem auto; opacity: 0.35; }
-        .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center; margin-top: 2rem; }
-        .hero-actions a:last-child { color: #c7c7c7; border-bottom: 1px solid rgba(255,255,255,0.16); padding-bottom: 0.15rem; }
-        .hero-actions a:hover { color: #fff; }
-        @keyframes floatUp { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
-        .float-up { animation: floatUp 8s ease-in-out infinite; }
         html { scroll-behavior: smooth; }
     </style>
 </head>
@@ -208,51 +195,33 @@
     <main class="hero-panel">
         <div class="hero-panel-inner">
             <div class="hero-copy reveal">
-                <p class="hero-label">Reach out</p>
-                <h1 class="hero-title text-5xl md:text-6xl xl:text-7xl font-bold heading-font">Contact<br>FadedSaint</h1>
+                <p class="hero-label">Secure access</p>
+                <h1 class="hero-title text-5xl md:text-6xl xl:text-7xl font-bold heading-font">Member Login</h1>
                 <span class="hero-line"></span>
-                <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto">Whether you have a custom order, collaboration idea, or product question, we’re here to help. Send us a message and we’ll respond quickly.</p>
-                <div class="hero-actions">
-                    <a href="catalog.html" class="btn-white">View Catalog</a>
-                    <a href="about.html" class="uppercase tracking-[0.35em] text-sm text-gray-400 hover:text-white transition">Our Story</a>
-                </div>
+                <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto">Sign in to manage your orders, check drop access, and explore premium releases reserved for members.</p>
             </div>
-            <div class="image-panel float-up reveal">
-                <span class="badge">Get in touch</span>
-                <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=900" alt="Contact image">
-                <span class="side-tag">Custom requests</span>
-            </div>
-        </div>
-    </main>
-
-    <section class="px-6 md:px-10 py-16 reveal">
-        <div class="max-w-6xl mx-auto grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
-            <div class="form-card">
+            <div class="form-card reveal">
                 <form class="grid gap-6">
-                    <div>
-                        <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Name</label>
-                        <input type="text" placeholder="Your name" class="input-field" />
-                    </div>
                     <div>
                         <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Email</label>
                         <input type="email" placeholder="you@example.com" class="input-field" />
                     </div>
                     <div>
-                        <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Message</label>
-                        <textarea rows="6" placeholder="Tell us what you're looking for" class="input-field"></textarea>
+                        <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Password</label>
+                        <input type="password" placeholder="Enter your password" class="input-field" />
                     </div>
-                    <button type="submit" class="btn-white">Send Message</button>
+                    <button type="submit" class="btn-white">Log In</button>
+                    <p class="text-gray-500 text-sm">Don’t have an account? <a href="contact.html" class="text-white underline">Contact us</a> for VIP access.</p>
                 </form>
             </div>
-            <div class="contact-panel reveal">
-                <h3 class="text-3xl heading-font mb-4">Need Help?</h3>
-                <p class="text-gray-400 leading-relaxed mb-6">We're here for collaborations, custom orders, and general inquiries. Connect with us and we’ll get back to you shortly.</p>
-                <p class="text-gray-500 uppercase tracking-[0.35em] text-[10px] mb-2">Email</p>
-                <p class="mb-6"><a href="mailto:hello@fadedsaint.co" class="text-white underline">hello@fadedsaint.co</a></p>
-                <p class="text-gray-500 uppercase tracking-[0.35em] text-[10px] mb-2">Hours</p>
-                <p class="text-gray-400">Mon – Fri: 9am – 6pm</p>
-                <p class="text-gray-400">Sat – Sun: Closed</p>
-            </div>
+        </div>
+    </main>
+
+    <section class="px-6 md:px-10 py-16 reveal">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="section-copy mb-4">Access your account</p>
+            <h2 class="section-heading heading-font mb-6">Stay ahead of every release</h2>
+            <p class="text-gray-400 max-w-3xl mx-auto leading-relaxed text-sm md:text-base">Login for early drop notifications, catalog previews, and member-only styling updates. FadedSaint members get first access to limited reworks and special capsule launches.</p>
         </div>
     </section>
 
