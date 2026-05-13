@@ -290,7 +290,11 @@
                 <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto">Sign in to manage your orders, check drop access, and explore premium releases reserved for members.</p>
             </div>
             <div class="form-card reveal">
-                <form class="grid gap-6">
+                <div class="grid gap-4 mb-6">
+                    <button type="button" id="loginTab" class="py-3 px-4 text-[11px] uppercase tracking-[0.35em] font-semibold border-b-2 border-white text-white transition">Log In</button>
+                    <button type="button" id="signupTab" class="py-3 px-4 text-[11px] uppercase tracking-[0.35em] font-semibold border-b-2 border-transparent text-gray-400 hover:text-white transition">Create Account</button>
+                </div>
+                <form id="loginForm" class="grid gap-6">
                     <div>
                         <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Email</label>
                         <input type="email" placeholder="you@example.com" class="input-field" />
@@ -300,7 +304,27 @@
                         <input type="password" placeholder="Enter your password" class="input-field" />
                     </div>
                     <button type="submit" class="btn-white">Log In</button>
-                    <p class="text-gray-500 text-sm">Don’t have an account? <a href="contact.html" class="text-white underline">Contact us</a> for VIP access.</p>
+                    <p class="text-gray-500 text-sm">Don't have an account? <a href="#" id="switchToSignup" class="text-white underline">Create one</a> above.</p>
+                </form>
+                <form id="signupForm" class="grid gap-6 hidden">
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Full Name</label>
+                        <input type="text" placeholder="Your name" class="input-field" />
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Email</label>
+                        <input type="email" placeholder="you@example.com" class="input-field" />
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Password</label>
+                        <input type="password" placeholder="Create a password" class="input-field" />
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-[0.35em] text-gray-500 mb-2">Confirm Password</label>
+                        <input type="password" placeholder="Confirm your password" class="input-field" />
+                    </div>
+                    <button type="submit" class="btn-white">Create Account</button>
+                    <p class="text-gray-500 text-sm">Already have an account? <a href="#" id="switchToLogin" class="text-white underline">Log in</a> above.</p>
                 </form>
             </div>
         </div>
@@ -322,6 +346,30 @@
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMenu = document.getElementById('closeMenu');
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+
+        const setActiveForm = (form) => {
+            if (form === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginTab.classList.add('border-white', 'text-white');
+                loginTab.classList.remove('border-transparent', 'text-gray-400');
+                signupTab.classList.remove('border-white', 'text-white');
+                signupTab.classList.add('border-transparent', 'text-gray-400');
+            } else {
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                signupTab.classList.add('border-white', 'text-white');
+                signupTab.classList.remove('border-transparent', 'text-gray-400');
+                loginTab.classList.remove('border-white', 'text-white');
+                loginTab.classList.add('border-transparent', 'text-gray-400');
+            }
+        };
 
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('-translate-x-full');
@@ -335,6 +383,17 @@
             if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                 mobileMenu.classList.add('-translate-x-full');
             }
+        });
+
+        loginTab.addEventListener('click', () => setActiveForm('login'));
+        signupTab.addEventListener('click', () => setActiveForm('signup'));
+        switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveForm('signup');
+        });
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveForm('login');
         });
 
         const revealElements = document.querySelectorAll('.reveal');
